@@ -16,17 +16,22 @@
 
 -module(emqttd_reloader_cli).
 
+-include("../../../include/emqttd_cli.hrl").
+
 -export([load/0, cli/1, unload/0]).
 
-load() ->
-    %% emqttd_ctl:register_cmd(recon, {?MODULE, cli}, []).
-    ok.
+load() -> emqttd_ctl:register_cmd(reload, {?MODULE, cli}, []).
+
+cli(["reload", Module]) ->
+    case emqttd_reloader:load_module(list_to_atom(Module)) of
+        {module, _Mod} ->
+            ?PRINT("Reload module ~s successfully.", [Module]);
+        {error, Error} -> 
+            ?PRINT("Failed to reload module ~s: ~p.", [Module, Reason])
+    end;
 
 cli(_) ->
-    %%?USAGE([{"reload <Modle>", "Reload Module"}]).
-    ok.
+    ?USAGE([{"reload <Modle>", "Reload Module"}]).
 
-unload() ->
-    %%emqttd_ctl:unregister_cmd(recon).
-    ok.
-
+unload() -> emqttd_ctl:unregister_cmd(reload).
+ 
