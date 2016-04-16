@@ -1,0 +1,8 @@
+{application, emqttd_reloader, [
+	{description, "emqttd reloader"},
+	{vsn, "0.1"},
+	{modules, []},
+	{registered, [emqttd_reloader_sup, emqttd_reloader]},
+	{applications, [kernel,stdlib, lager]},
+	{mod, {emqttd_reloader_app, []}}
+]}.
