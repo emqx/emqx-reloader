@@ -27,7 +27,7 @@ start() ->
 
 start(_Type, _Args) ->
     emqttd_reloader_cli:load(),
-	emqttd_reloader_sup:start_link().
+    emqttd_reloader_sup:start_link().
 
 stop(_State) ->
     emqttd_reloader_cli:unload(), ok.
