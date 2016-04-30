@@ -2,8 +2,12 @@ PROJECT = emqttd_reloader
 PROJECT_DESCRIPTION = emqttd reloader
 PROJECT_VERSION = 0.1
 
-DEPS = lager
+DEPS = emqttd
+
+dep_emqttd = git https://github.com/emqtt/emqttd plus
 
 ERLC_OPTS += +'{parse_transform, lager_transform}'
 
 include erlang.mk
+
+app:: rebar.config
