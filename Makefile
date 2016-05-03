@@ -1,6 +1,6 @@
 PROJECT = emqttd_reloader
 PROJECT_DESCRIPTION = emqttd reloader
-PROJECT_VERSION = 0.1
+PROJECT_VERSION = 1.0
 
 DEPS = lager
 
