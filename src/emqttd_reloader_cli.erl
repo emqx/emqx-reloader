@@ -31,7 +31,7 @@ cli(["reload", Module]) ->
     end;
 
 cli(_) ->
-    ?USAGE([{"reload <Modle>", "Reload Module"}]).
+    ?USAGE([{"reload <Module>", "Reload Module"}]).
 
 unload() -> emqttd_ctl:unregister_cmd(reload).
 
