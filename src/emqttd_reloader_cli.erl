@@ -25,9 +25,9 @@ load() -> emqttd_ctl:register_cmd(reload, {?MODULE, cli}, []).
 cli([Module]) ->
     case emqttd_reloader:reload_module(list_to_atom(Module)) of
         {module, _Mod} ->
-            ?PRINT("Reload module ~s successfully.", [Module]);
+            ?PRINT("Reload module ~s successfully.~n", [Module]);
         {error, Reason} ->
-            ?PRINT("Failed to reload module ~s: ~p.", [Module, Reason])
+            ?PRINT("Failed to reload module ~s: ~p.~n", [Module, Reason])
     end;
 
 cli(_) ->
