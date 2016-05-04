@@ -9,3 +9,6 @@ rel/example_project
 .concrete/DEV_MODE
 .rebar
 log
+.erlang.mk/
+ct.coverdata
+logs/
