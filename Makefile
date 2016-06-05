@@ -1,6 +1,6 @@
 PROJECT = emqttd_reloader
 PROJECT_DESCRIPTION = emqttd reloader
-PROJECT_VERSION = 1.0
+PROJECT_VERSION = 1.1
 
 DEPS = emqttd
 dep_emqttd = git https://github.com/emqtt/emqttd plus
