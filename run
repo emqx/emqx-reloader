@@ -1,4 +1,0 @@
-#!/bin/sh
-
-erl -pa ebin/ -pa deps/*/ebin/ -config etc/emqttd_reloader.config -s emqttd_reloader_app
-

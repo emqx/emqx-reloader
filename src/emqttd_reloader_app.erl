@@ -16,19 +16,24 @@
 
 -module(emqttd_reloader_app).
 
+-author("Feng Lee <feng@emqtt.io>").
+
 -behaviour(application).
 
 -export([start/0]).
 
 -export([start/2, stop/1]).
 
+-define(APP, emqttd_reloader).
+
 start() ->
-    application:ensure_all_started(emqttd_reloader).
+    application:ensure_all_started(?APP).
 
 start(_Type, _Args) ->
+    gen_conf:init(?APP),
     emqttd_reloader_cli:load(),
     emqttd_reloader_sup:start_link().
 
 stop(_State) ->
-    emqttd_reloader_cli:unload(), ok.
+    emqttd_reloader_cli:unload().
 
