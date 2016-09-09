@@ -30,5 +30,5 @@ start_link() ->
 	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
-    {ok, {{one_for_one, 5, 60}, [?CHILD(?APP, application:get_all_env(?APP))]}}.
+    {ok, {{one_for_one, 5, 60}, [?CHILD(?APP, gen_conf:all(?APP))]}}.
 

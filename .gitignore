@@ -10,5 +10,6 @@ rel/example_project
 .rebar
 log
 .erlang.mk/
+emqttd_reloader.d
 ct.coverdata
 logs/
