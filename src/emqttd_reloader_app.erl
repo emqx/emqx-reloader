@@ -30,7 +30,6 @@ start() ->
     application:ensure_all_started(?APP).
 
 start(_Type, _Args) ->
-    gen_conf:init(?APP),
     emqttd_reloader_cli:load(),
     emqttd_reloader_sup:start_link().
 

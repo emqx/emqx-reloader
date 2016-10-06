@@ -1,12 +1,12 @@
 PROJECT = emqttd_reloader
 PROJECT_DESCRIPTION = emqttd reloader
-PROJECT_VERSION = 2.0
-
-DEPS = gen_conf
-dep_gen_conf = git https://github.com/emqtt/gen_conf master
+PROJECT_VERSION = 3.0
 
 BUILD_DEPS = emqttd
 dep_emqttd = git https://github.com/emqtt/emqttd master
+
+TEST_DEPS = cuttlefish
+dep_cuttlefish = git https://github.com/basho/cuttlefish master
 
 ERLC_OPTS += +'{parse_transform, lager_transform}'
 
@@ -15,4 +15,7 @@ COVER = true
 include erlang.mk
 
 app:: rebar.config
+
+app.config::
+	cuttlefish -l info -e etc/ -c etc/emqttd_reloader.conf -i priv/emqttd_reloader.schema -d .data
 
