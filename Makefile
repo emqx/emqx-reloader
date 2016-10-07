@@ -1,5 +1,5 @@
-PROJECT = emqttd_reloader
-PROJECT_DESCRIPTION = emqttd reloader
+PROJECT = emq_reloader
+PROJECT_DESCRIPTION = Reloader Plugin for EMQ 3.0
 PROJECT_VERSION = 3.0
 
 BUILD_DEPS = emqttd
@@ -17,5 +17,5 @@ include erlang.mk
 app:: rebar.config
 
 app.config::
-	cuttlefish -l info -e etc/ -c etc/emqttd_reloader.conf -i priv/emqttd_reloader.schema -d .data
+	cuttlefish -l info -e etc/ -c etc/emq_reloader.conf -i priv/emq_reloader.schema -d data
 

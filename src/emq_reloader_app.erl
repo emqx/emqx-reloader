@@ -14,25 +14,18 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emqttd_reloader_app).
+-module(emq_reloader_app).
 
 -author("Feng Lee <feng@emqtt.io>").
 
 -behaviour(application).
 
--export([start/0]).
-
 -export([start/2, stop/1]).
 
--define(APP, emqttd_reloader).
-
-start() ->
-    application:ensure_all_started(?APP).
-
 start(_Type, _Args) ->
-    emqttd_reloader_cli:load(),
-    emqttd_reloader_sup:start_link().
+    emq_reloader_cli:load(),
+    emq_reloader_sup:start_link().
 
 stop(_State) ->
-    emqttd_reloader_cli:unload().
+    emq_reloader_cli:unload().
 

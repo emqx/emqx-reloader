@@ -14,7 +14,7 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emqttd_reloader_cli).
+-module(emq_reloader_cli).
 
 -include_lib("emqttd/include/emqttd_cli.hrl").
 
@@ -23,7 +23,7 @@
 load() -> emqttd_ctl:register_cmd(reload, {?MODULE, cmd}, []).
 
 cmd([Module]) ->
-    case emqttd_reloader:reload_module(list_to_atom(Module)) of
+    case emq_reloader:reload_module(list_to_atom(Module)) of
         {module, _Mod} ->
             ?PRINT("Reload module ~s successfully.~n", [Module]);
         {error, Reason} ->

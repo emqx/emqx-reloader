@@ -22,7 +22,7 @@
 %% @doc Erlang module for automatically reloading modified modules
 %% during development.
 
--module(emqttd_reloader).
+-module(emq_reloader).
 
 -include_lib("kernel/include/file.hrl").
 
@@ -77,7 +77,7 @@ is_changed(M) when is_atom(M) ->
 
 init([Opts]) ->
     Interval = proplists:get_value(interval, Opts, 0),
-    LogFile  = proplists:get_value(logfile, Opts, "log/emqttd_reloader.log"),
+    LogFile  = proplists:get_value(logfile, Opts, "log/emq_reloader.log"),
     {ok, Trace} = lager:trace_file(LogFile, [{module, ?MODULE}], info),
     {ok, init_timer(Interval, #state{last = stamp(), log = LogFile, trace = Trace})}.
 

@@ -1,9 +1,0 @@
-{mapping, "emq.reloader.interval", "emqttd_reloader.interval", [
-  {default, 60},
-  {datatype, integer}
-]}.
-
-{mapping, "emq.reloader.logfile", "emqttd_reloader.logfile", [
-  {default, "log/emqttd_reloader.log"},
-  {datatype, string}
-]}.

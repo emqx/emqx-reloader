@@ -14,7 +14,7 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emqttd_reloader_sup).
+-module(emq_reloader_sup).
 
 -behaviour(supervisor).
 
@@ -22,7 +22,7 @@
 
 -export([init/1]).
 
--define(APP, emqttd_reloader).
+-define(APP, emq_reloader).
 
 -define(CHILD(M, Env), {M, {M, start_link, [Env]}, permanent, 5000, worker, [M]}).
 
