@@ -1,5 +1,5 @@
 PROJECT = emq_reloader
-PROJECT_DESCRIPTION = Reloader Plugin for EMQ 3.0
+PROJECT_DESCRIPTION = EMQ Reloader Plugin
 PROJECT_VERSION = 3.0
 
 BUILD_DEPS = emqttd
