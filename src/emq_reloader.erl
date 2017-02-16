@@ -1,5 +1,5 @@
 %%--------------------------------------------------------------------
-%% Copyright (c) 2016-2017 Feng Lee <feng@emqtt.io>.
+%% Copyright (c) 2013-2017 EMQ Enterprise, Inc. (http://emqtt.io)
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -81,10 +81,10 @@ init([Opts]) ->
     {ok, Trace} = lager:trace_file(LogFile, [{module, ?MODULE}], info),
     {ok, init_timer(Interval, #state{last = stamp(), log = LogFile, trace = Trace})}.
 
-init_timer(Secs, State) when Secs =< 0 ->
+init_timer(Ms, State) when Ms =< 0 ->
     State;
-init_timer(Secs, State) ->
-    {ok, TRef} = timer:send_interval(timer:seconds(Secs), do),
+init_timer(Ms, State) ->
+    {ok, TRef} = timer:send_interval(Ms, do),
     State#state{tref = TRef}.
 
 handle_call(stop, _From, State) ->
