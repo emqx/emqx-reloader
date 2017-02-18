@@ -16,9 +16,9 @@
 
 -module(emq_reloader_app).
 
--author("Feng Lee <feng@emqtt.io>").
-
 -behaviour(application).
+
+-author("Feng Lee <feng@emqtt.io>").
 
 -export([start/2, stop/1]).
 

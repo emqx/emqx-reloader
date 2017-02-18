@@ -77,8 +77,9 @@ is_changed(M) when is_atom(M) ->
 
 init([Opts]) ->
     Interval = proplists:get_value(interval, Opts, 0),
-    LogFile  = proplists:get_value(logfile, Opts, "log/emq_reloader.log"),
-    {ok, Trace} = lager:trace_file(LogFile, [{module, ?MODULE}], info),
+    LogDir   = application:get_env(lager, log_dir, "log"),
+    LogFile  = proplists:get_value(logfile, Opts, "reloader.log"),
+    {ok, Trace} = lager:trace_file(filename:join(LogDir, LogFile), [{module, ?MODULE}], info),
     {ok, init_timer(Interval, #state{last = stamp(), log = LogFile, trace = Trace})}.
 
 init_timer(Ms, State) when Ms =< 0 ->
