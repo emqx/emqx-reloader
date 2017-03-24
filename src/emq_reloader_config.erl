@@ -21,7 +21,7 @@
          reloader/2,
          reloader/3]).
 
--type application() :: atom().
+-type(application() :: atom()).
 
 %%--------------------------------------------------------------------
 %% API.
