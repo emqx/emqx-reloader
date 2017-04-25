@@ -1,9 +1,9 @@
 PROJECT = emq_reloader
 PROJECT_DESCRIPTION = Reloader Plugin
-PROJECT_VERSION = 2.1.2
+PROJECT_VERSION = 2.2
 
 BUILD_DEPS = emqttd cuttlefish
-dep_emqttd = git https://github.com/emqtt/emqttd master
+dep_emqttd = git https://github.com/emqtt/emqttd emq22
 dep_cuttlefish = git https://github.com/emqtt/cuttlefish
 
 ERLC_OPTS += +'{parse_transform, lager_transform}'
