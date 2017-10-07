@@ -14,24 +14,23 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emq_reloader_cli).
+-module(emqx_reloader_sup).
 
--include_lib("emqttd/include/emqttd_cli.hrl").
+-behaviour(supervisor).
 
--export([load/0, cmd/1, unload/0]).
+-author("Feng Lee <feng@emqtt.io>").
 
-load() -> emqttd_ctl:register_cmd(reload, {?MODULE, cmd}, []).
+-export([start_link/0]).
 
-cmd([Module]) ->
-    case emq_reloader:reload_module(list_to_atom(Module)) of
-        {module, _Mod} ->
-            ?PRINT("Reload module ~s successfully.~n", [Module]);
-        {error, Reason} ->
-            ?PRINT("Failed to reload module ~s: ~p.~n", [Module, Reason])
-    end;
+-export([init/1]).
 
-cmd(_) ->
-    ?USAGE([{"reload <Module>", "Reload a Module"}]).
+-define(APP, emqx_reloader).
 
-unload() -> emqttd_ctl:unregister_cmd(reload).
+-define(CHILD(M, Env), {M, {M, start_link, [Env]}, permanent, 5000, worker, [M]}).
+
+start_link() ->
+	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+
+init([]) ->
+    {ok, {{one_for_one, 5, 60}, [?CHILD(?APP, application:get_all_env(?APP))]}}.
 

@@ -14,21 +14,18 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emq_reloader_sup).
+-module(emqx_reloader_app).
 
--behaviour(supervisor).
+-behaviour(application).
 
--export([start_link/0]).
+-author("Feng Lee <feng@emqtt.io>").
 
--export([init/1]).
+-export([start/2, stop/1]).
 
--define(APP, emq_reloader).
+start(_Type, _Args) ->
+    emqx_reloader_cli:load(),
+    emqx_reloader_sup:start_link().
 
--define(CHILD(M, Env), {M, {M, start_link, [Env]}, permanent, 5000, worker, [M]}).
-
-start_link() ->
-	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
-
-init([]) ->
-    {ok, {{one_for_one, 5, 60}, [?CHILD(?APP, application:get_all_env(?APP))]}}.
+stop(_State) ->
+    emqx_reloader_cli:unload().
 

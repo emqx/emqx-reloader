@@ -1,6 +1,6 @@
 
-emq_reloader
-============
+emqx-reloader
+=============
 
 Erlang Module Reloader for Development
 
@@ -9,7 +9,7 @@ NOTICE: Don't load the plugin in production.
 Configure Plugin
 ----------------
 
-File: etc/emq_reloader.conf
+File: etc/emqx_reloader.conf
 
 ```
 reloader.interval = 60
@@ -21,13 +21,22 @@ Load the Plugin
 ---------------
 
 ```
-./bin/emqttd_ctl plugins load emq_reloader
+./bin/emqx_ctl plugins load emqx_reloader
 ```
 
 CLI
 ---
 
 ```
-./bin/emqttd_ctl reload <Module>
+./bin/emqx_ctl reload <Module>
 ```
 
+License
+-------
+
+Apache License Version 2.0
+
+Author
+------
+
+EMQ X-Men Team.

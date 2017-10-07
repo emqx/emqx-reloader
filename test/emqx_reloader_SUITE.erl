@@ -1,5 +1,5 @@
 
--module(emqttd_reloader_SUITE).
+-module(emqx_reloader_SUITE).
 
 -compile(export_all).
 

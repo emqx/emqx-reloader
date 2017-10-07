@@ -1,9 +1,9 @@
-PROJECT = emq_reloader
+PROJECT = emqx_reloader
 PROJECT_DESCRIPTION = Reloader Plugin
-PROJECT_VERSION = 2.3
+PROJECT_VERSION = 2.4
 
-BUILD_DEPS = emqttd cuttlefish
-dep_emqttd = git https://github.com/emqtt/emqttd develop
+BUILD_DEPS = emqx cuttlefish
+dep_emqx = git https://github.com/emqtt/emqttd X
 dep_cuttlefish = git https://github.com/emqtt/cuttlefish
 
 ERLC_OPTS += +debug_info
@@ -18,5 +18,5 @@ include erlang.mk
 app:: rebar.config
 
 app.config::
-	 ./deps/cuttlefish/cuttlefish -l info -e etc/ -c etc/emq_reloader.conf -i priv/emq_reloader.schema -d data
+	 ./deps/cuttlefish/cuttlefish -l info -e etc/ -c etc/emqx_reloader.conf -i priv/emqx_reloader.schema -d data
 

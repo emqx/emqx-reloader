@@ -14,18 +14,26 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emq_reloader_app).
-
--behaviour(application).
+-module(emqx_reloader_cli).
 
 -author("Feng Lee <feng@emqtt.io>").
 
--export([start/2, stop/1]).
+-include_lib("emqx/include/emqx_macros.hrl").
 
-start(_Type, _Args) ->
-    emq_reloader_cli:load(),
-    emq_reloader_sup:start_link().
+-export([load/0, cmd/1, unload/0]).
 
-stop(_State) ->
-    emq_reloader_cli:unload().
+load() -> emqx_ctl:register_cmd(reload, {?MODULE, cmd}, []).
+
+cmd([Module]) ->
+    case emq_reloader:reload_module(list_to_atom(Module)) of
+        {module, _Mod} ->
+            ?PRINT("Reload module ~s successfully.~n", [Module]);
+        {error, Reason} ->
+            ?PRINT("Failed to reload module ~s: ~p.~n", [Module, Reason])
+    end;
+
+cmd(_) ->
+    ?USAGE([{"reload <Module>", "Reload a Module"}]).
+
+unload() -> emqx_ctl:unregister_cmd(reload).
 

@@ -22,7 +22,7 @@
 %% @doc Erlang module for automatically reloading modified modules
 %% during development.
 
--module(emq_reloader).
+-module(emqx_reloader).
 
 -include_lib("kernel/include/file.hrl").
 

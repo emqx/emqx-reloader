@@ -14,7 +14,16 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emq_reloader_config).
+
+%% Notice that this file is copied from mochiweb project.
+%%
+%% @copyright 2007 Mochi Media, Inc.
+%% @author Matthew Dempsky <matthew@mochimedia.com>
+%%
+%% @doc Erlang module for automatically reloading modified modules
+%% during development.
+
+-module(emqx_reloader_config).
 
 -export([reloader/0,
          reloader/1,
