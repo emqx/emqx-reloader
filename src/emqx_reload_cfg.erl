@@ -21,16 +21,11 @@
 %%
 %% @doc Erlang module for automatically reloading modified modules
 %% during development.
--module(emq_reload_config).
+
+-module(emqx_reload_cfg).
 
 %% API
--export([get_all_env/0,
-         get_all_env/1,
-         reload/0,
-         reload/1,
-         reload/2,
-         reload/3]).
-
+-export([get_all_env/0, get_all_env/1, reload/0, reload/1, reload/2, reload/3]).
 
 -type application() :: atom().
 -type env() :: term().
@@ -38,6 +33,7 @@
 %%%===================================================================
 %%% API
 %%%===================================================================
+
 -spec reload() -> {'ok', [application()]}.
 reload() ->
     reload([]).
