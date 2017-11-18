@@ -1,5 +1,5 @@
 
-emq_reloader
+emq-reloader
 ============
 
 Erlang Module Reloader for Development
