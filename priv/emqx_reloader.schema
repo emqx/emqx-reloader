@@ -1,6 +1,5 @@
 %%-*- mode: erlang -*-
-%% emq_reloader config mapping
-
+%% emqx_reloader config mapping
 {mapping, "reloader.interval", "emqx_reloader.interval", [
   {default, "60s"},
   {datatype, {duration, ms}}
