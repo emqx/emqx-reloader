@@ -1,6 +1,6 @@
 PROJECT = emq_reloader
 PROJECT_DESCRIPTION = Reloader Plugin
-PROJECT_VERSION = 2.3.1
+PROJECT_VERSION = 2.3.2
 
 BUILD_DEPS = emqttd cuttlefish
 dep_emqttd = git https://github.com/emqtt/emqttd emq24
