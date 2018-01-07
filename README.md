@@ -12,9 +12,25 @@ Configure Plugin
 File: etc/emq_reloader.conf
 
 ```
-reloader.interval = 60
+## Interval of hot code reloading.
+##
+## Value: Duration
+##  - h: hour
+##  - m: minute
+##  - s: second
+##
+## Examples:
+##  - 2h:  2 hours
+##  - 30m: 30 minutes
+##  - 20s: 20 seconds
+##
+## Defaut: 60s
+reloader.interval = 60s
 
-reloader.logfile = log/reloader.log
+## Logfile of reloader.
+##
+## Value: File
+reloader.logfile = reloader.log
 ```
 
 Load the Plugin
