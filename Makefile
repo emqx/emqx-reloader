@@ -1,15 +1,18 @@
 PROJECT = emqx_reloader
 PROJECT_DESCRIPTION = EMQ X Reloader Plugin
-PROJECT_VERSION = 2.4.1
+PROJECT_VERSION = 3.0
 
-BUILD_DEPS = emqx cuttlefish
-dep_emqx = git git@github.com:emqx/emqx-enterprise
-dep_cuttlefish = git https://github.com/emqtt/cuttlefish
+BUILD_DEPS = emqx
+dep_emqx = git git@github.com:emqx/emqx emqx30
 
-ERLC_OPTS += +debug_info
-ERLC_OPTS += +'{parse_transform, lager_transform}'
+TEST_DEPS = emqx_ct_helpers
+dep_emqx_ct_helpers = git git@github.com:emqx/emqx-ct-helpers
 
 NO_AUTOPATCH = cuttlefish
+
+ERLC_OPTS += +debug_info
+ERLC_OPTS += +warnings_as_errors +warn_export_all +warn_unused_import
+ERLC_OPTS += +'{parse_transform, lager_transform}'
 
 COVER = true
 
