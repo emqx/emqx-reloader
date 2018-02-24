@@ -3,12 +3,10 @@ PROJECT_DESCRIPTION = EMQ X Reloader Plugin
 PROJECT_VERSION = 3.0
 
 BUILD_DEPS = emqx
-dep_emqx = git git@github.com:emqx/emqx emqx30
+dep_emqx = git git@github.com:emqtt/emqttd emqx30
 
 TEST_DEPS = emqx_ct_helpers
 dep_emqx_ct_helpers = git git@github.com:emqx/emqx-ct-helpers
-
-NO_AUTOPATCH = cuttlefish
 
 ERLC_OPTS += +debug_info
 ERLC_OPTS += +warnings_as_errors +warn_export_all +warn_unused_import
