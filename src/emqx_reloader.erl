@@ -1,5 +1,4 @@
-%%--------------------------------------------------------------------
-%% Copyright (c) 2013-2018 EMQ Enterprise, Inc. (http://emqtt.io)
+%% Copyright (c) 2018 EMQ Technologies Co., Ltd. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -12,16 +11,13 @@
 %% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
-%%--------------------------------------------------------------------
 
 %% Notice that this file is copied from mochiweb project.
 %%
 %% @copyright 2007 Mochi Media, Inc.
 %% @author Matthew Dempsky <matthew@mochimedia.com>
 %%
-%% @doc Erlang module for automatically reloading modified modules
-%% during development.
-
+%% @doc Erlang module for automatically reloading modified modules during development.
 -module(emqx_reloader).
 
 -include_lib("kernel/include/file.hrl").
@@ -32,25 +28,24 @@
 
 -export([reload_module/1, reload_modules/1, all_changed/0, is_changed/1]).
 
--export([init/1, handle_call/3, handle_cast/2, handle_info/2,
-         terminate/2, code_change/3]).
+-export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2,
+         code_change/3]).
 
 -record(state, {last, tref, log, trace}).
 
-%%--------------------------------------------------------------------
-%% API.
-%%--------------------------------------------------------------------
-
-%% @doc Start the Reloader.
-start_link(Opts) -> gen_server:start_link({local, ?MODULE}, ?MODULE, [Opts], []).
+%% @doc Start the reloader.
+start_link(Opts) ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [Opts], []).
 
 %% @doc Stop the reloader.
 -spec(stop() -> ok).
-stop() -> gen_server:call(?MODULE, stop).
+stop() ->
+    gen_server:call(?MODULE, stop).
 
 %% @doc Reload modules
 -spec(reload_modules([atom()]) -> [{module, atom()} | {error, term()}]).
-reload_modules(Modules) -> [reload_module(M) || M <- Modules].
+reload_modules(Modules) ->
+    [reload_module(M) || M <- Modules].
 
 %% @doc Reload a module
 -spec(reload_module(atom()) -> {error, term()} | {module(), atom()}).
@@ -59,7 +54,8 @@ reload_module(Module) when is_atom(Module) ->
 
 %% @doc Return a list of beam modules that have been changed.
 -spec(all_changed() -> [atom()]).
-all_changed() -> [M || {M, Fn} <- code:all_loaded(), is_list(Fn), is_changed(M)].
+all_changed() ->
+    [M || {M, Fn} <- code:all_loaded(), is_list(Fn), is_changed(M)].
 
 %% @doc true if the loaded module is a beam with a vsn attribute
 %%      and does not match the on-disk beam file, returns false otherwise.
@@ -105,13 +101,14 @@ handle_info(_Info, State) ->
     {noreply, State}.
 
 terminate(_Reason, #state{tref = TRef, trace = Trace}) ->
-    cancel_timer(TRef), lager:stop_trace(Trace).
+    cancel_timer(TRef),
+    lager:stop_trace(Trace).
 
 code_change(_Vsn, State, _Extra) ->
     {ok, State}.
 
 %%--------------------------------------------------------------------
-%% Internal Functions
+%% Internal functions
 %%--------------------------------------------------------------------
 
 module_vsn({M, Beam, _Fn}) ->
@@ -147,6 +144,6 @@ do_(From, To) ->
 
 stamp() -> erlang:localtime().
 
-cancel_timer(undefined) -> ok;
+cancel_timer(undefined) ->ok;
 cancel_timer(TRef)      -> timer:cancel(TRef).
 

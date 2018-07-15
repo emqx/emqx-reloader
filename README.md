@@ -2,7 +2,7 @@
 emqx-reloader
 =============
 
-Erlang Module Reloader for Development
+Erlang Module Hot Reloader for Development.
 
 NOTICE: Don't load the plugin in production.
 
@@ -55,4 +55,4 @@ Apache License Version 2.0
 Author
 ------
 
-EMQ X-Men Team.
+EMQ X Team.

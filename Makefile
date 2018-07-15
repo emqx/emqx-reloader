@@ -19,5 +19,5 @@ include erlang.mk
 app:: rebar.config
 
 app.config::
-	 ./deps/cuttlefish/cuttlefish -l info -e etc/ -c etc/emqx_reloader.conf -i priv/emqx_reloader.schema -d data
+	./deps/cuttlefish/cuttlefish -l info -e etc/ -c etc/emqx_reloader.conf -i priv/emqx_reloader.schema -d data
 
