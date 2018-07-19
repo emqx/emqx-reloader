@@ -28,7 +28,7 @@ cmd([Module]) ->
     end;
 
 cmd(_) ->
-    ?USAGE([{"reload <Module>", "Reload a module"}]).
+    emqx_cli:usage([{"reload <Module>", "Reload a module"}]).
 
 unload() ->
     emqx_ctl:unregister_cmd(reload).
