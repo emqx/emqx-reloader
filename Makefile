@@ -1,6 +1,6 @@
 PROJECT = emqx_reloader
 PROJECT_DESCRIPTION = EMQ X Reloader Plugin
-PROJECT_VERSION = 2.4.2
+PROJECT_VERSION = 2.4.3
 
 BUILD_DEPS = emqx cuttlefish
 dep_emqx = git git@github.com:emqx/emqx-enterprise
