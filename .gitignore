@@ -16,3 +16,5 @@ test/ct.cover.spec
 logs/
 data/
 .DS_Store
+cover/
+eunit.coverdata

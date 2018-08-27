@@ -17,7 +17,7 @@
 -export([load/0, cmd/1, unload/0]).
 
 load() ->
-    emqx_ctl:register_cmd(reload, {?MODULE, cmd}, []).
+    emqx_ctl:register_command(reload, {?MODULE, cmd}, []).
 
 cmd([Module]) ->
     case emqx_reloader:reload_module(list_to_atom(Module)) of
@@ -31,5 +31,5 @@ cmd(_) ->
     emqx_cli:usage([{"reload <Module>", "Reload a module"}]).
 
 unload() ->
-    emqx_ctl:unregister_cmd(reload).
+    emqx_ctl:unregister_command(reload).
 

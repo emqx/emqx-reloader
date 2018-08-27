@@ -24,7 +24,7 @@
 
 -behaviour(gen_server).
 
--export([start_link/1, stop/0]).
+-export([start_link/0, stop/0]).
 
 -export([reload_module/1, reload_modules/1, all_changed/0, is_changed/1]).
 
@@ -33,9 +33,11 @@
 
 -record(state, {last, tref, log, trace}).
 
+-define(APP, ?MODULE).
+
 %% @doc Start the reloader.
-start_link(Opts) ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, [Opts], []).
+start_link() ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 %% @doc Stop the reloader.
 -spec(stop() -> ok).
@@ -67,14 +69,14 @@ is_changed(M) when is_atom(M) ->
         false
     end.
 
-%%--------------------------------------------------------------------
+%%------------------------------------------------------------------------------
 %% gen_server callbacks
-%%--------------------------------------------------------------------
+%%------------------------------------------------------------------------------
 
-init([Opts]) ->
-    Interval = proplists:get_value(interval, Opts, 0),
+init([]) ->
+    Interval = application:get_env(?APP, interval, 0),
     LogDir   = application:get_env(lager, log_dir, "log"),
-    LogFile  = proplists:get_value(logfile, Opts, "reloader.log"),
+    LogFile  = application:get_env(?APP, logfile, "reloader.log"),
     {ok, Trace} = lager:trace_file(filename:join(LogDir, LogFile), [{module, ?MODULE}], info),
     {ok, init_timer(Interval, #state{last = stamp(), log = LogFile, trace = Trace})}.
 
@@ -107,9 +109,9 @@ terminate(_Reason, #state{tref = TRef, trace = Trace}) ->
 code_change(_Vsn, State, _Extra) ->
     {ok, State}.
 
-%%--------------------------------------------------------------------
+%%------------------------------------------------------------------------------
 %% Internal functions
-%%--------------------------------------------------------------------
+%%------------------------------------------------------------------------------
 
 module_vsn({M, Beam, _Fn}) ->
     {ok, {M, Vsn}} = beam_lib:version(Beam), Vsn;
@@ -144,6 +146,6 @@ do_(From, To) ->
 
 stamp() -> erlang:localtime().
 
-cancel_timer(undefined) ->ok;
+cancel_timer(undefined) -> ok;
 cancel_timer(TRef)      -> timer:cancel(TRef).
 

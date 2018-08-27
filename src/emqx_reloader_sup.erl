@@ -20,15 +20,13 @@
 
 -export([init/1]).
 
--define(APP, emqx_reloader).
-
 start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 init([]) ->
     {ok, {{one_for_one, 5, 60},
           [#{id       => reloader,
-             start    => {emqx_reloader, start_link, [application:get_all_env(?APP)]},
+             start    => {emqx_reloader, start_link, []},
              restart  => permanent,
              shutdown => 5000,
              type     => worker,
