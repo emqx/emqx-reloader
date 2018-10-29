@@ -10,7 +10,6 @@ dep_emqx_ct_helpers = git https://github.com/emqx/emqx-ct-helpers
 
 ERLC_OPTS += +debug_info
 ERLC_OPTS += +warnings_as_errors +warn_export_all +warn_unused_import
-ERLC_OPTS += +'{parse_transform, lager_transform}'
 
 COVER = true
 

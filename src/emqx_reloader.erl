@@ -31,7 +31,7 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2,
          code_change/3]).
 
--record(state, {last, tref, log, trace}).
+-record(state, {last, tref}).
 
 -define(APP, ?MODULE).
 
@@ -75,10 +75,7 @@ is_changed(M) when is_atom(M) ->
 
 init([]) ->
     Interval = application:get_env(?APP, interval, 0),
-    LogDir   = application:get_env(lager, log_dir, "log"),
-    LogFile  = application:get_env(?APP, logfile, "reloader.log"),
-    {ok, Trace} = lager:trace_file(filename:join(LogDir, LogFile), [{module, ?MODULE}], info),
-    {ok, init_timer(Interval, #state{last = stamp(), log = LogFile, trace = Trace})}.
+    {ok, init_timer(Interval, #state{last = stamp()})}.
 
 init_timer(Ms, State) when Ms =< 0 ->
     State;
@@ -102,9 +99,8 @@ handle_info(do, State) ->
 handle_info(_Info, State) ->
     {noreply, State}.
 
-terminate(_Reason, #state{tref = TRef, trace = Trace}) ->
-    cancel_timer(TRef),
-    lager:stop_trace(Trace).
+terminate(_Reason, #state{tref = TRef}) ->
+    cancel_timer(TRef).
 
 code_change(_Vsn, State, _Extra) ->
     {ok, State}.
@@ -125,10 +121,10 @@ do_(From, To) ->
          {ok, #file_info{mtime = Mtime}} when Mtime >= From, Mtime < To ->
             case reload_module(Module) of
                 {module, Module} ->
-                    lager:info([{module, ?MODULE}], "Reload module ~s successfully.", [Module]),
+                    logger:info([{module, ?MODULE}], "Reload module ~s successfully.", [Module]),
                     ok;
                 {error, Reason} ->
-                    lager:info([{module, ?MODULE}], "Failed to reload module ~s: ~p.", [Module, Reason]),
+                    logger:info([{module, ?MODULE}], "Failed to reload module ~s: ~p.", [Module, Reason]),
                     error
             end;
          {ok, _} ->
@@ -139,7 +135,7 @@ do_(From, To) ->
              %% warning here, but I'd want to limit it to just once.
              gone;
          {error, Reason} ->
-             lager:error([{module, ?MODULE}], "Error reading ~s's file info: ~p~n",
+             logger:error([{module, ?MODULE}], "Error reading ~s's file info: ~p~n",
                          [Filename, Reason]),
              error
      end || {Module, Filename} <- code:all_loaded(), is_list(Filename)].
