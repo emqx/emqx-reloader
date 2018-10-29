@@ -44,7 +44,7 @@ reload(Applications, RestartApps, ConfigFile) ->
 reload_ll(Applications, Config, RestartApps) ->
     case application_specs(Applications) of
         {incorrect_specs, IncorrectApps} ->
-            lager:error("incorrect_specs error ~p", [IncorrectApps]),
+            logger:error("incorrect_specs error ~p", [IncorrectApps]),
             {error, {incorrect_specs, IncorrectApps}};
         Specs ->
             {change_application_data(Specs, Config, RestartApps), Applications}
