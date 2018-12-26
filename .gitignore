@@ -10,7 +10,11 @@ rel/example_project
 .rebar
 log
 .erlang.mk/
-emqttd_reloader.d
+emqx_reloader.d
 ct.coverdata
+test/ct.cover.spec
 logs/
 data/
+.DS_Store
+cover/
+eunit.coverdata

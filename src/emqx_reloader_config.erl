@@ -1,5 +1,4 @@
-%%--------------------------------------------------------------------
-%% Copyright (c) 2013-2018 EMQ Enterprise, Inc. (http://emqtt.io)
+%% Copyright (c) 2018 EMQ Technologies Co., Ltd. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -12,54 +11,40 @@
 %% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
-%%--------------------------------------------------------------------
+%% Notice that this file is copied from mochiweb project.
 
--module(emq_reloader_config).
+-module(emqx_reloader_config).
 
--export([reloader/0,
-         reloader/1,
-         reloader/2,
-         reloader/3]).
+-export([reload/0, reload/1, reload/2, reload/3]).
 
 -type(application() :: atom()).
 
-%%--------------------------------------------------------------------
-%% API.
-%%--------------------------------------------------------------------
+%% @doc Reload all app config file
+-spec(reload() -> {'ok', [application()]}).
+reload() -> reload([]).
 
-%% @doc reload all app config file
--spec reloader() -> {'ok', [application()]}.
-reloader() ->
-    reloader([]).
-
-%% @doc reload all app config file, restart apps
--spec reloader(RestartApps :: [application()]) -> {'ok', [application()]}.
-reloader(RestartApps) ->
+%% @doc Reload all app config file, restart apps
+-spec(reload([application()]) -> {'ok', [application()]}).
+reload(RestartApps) ->
     AvailableApplications = [Application || {Application, _, _} <- application:loaded_applications()],
-    reloader(AvailableApplications, RestartApps).
+    reload(AvailableApplications, RestartApps).
 
-%% @doc reload specify app config file, restart apps
--spec reloader(Applications :: [application()], 
-             RestartApps :: [application()]) -> {'ok', [application()]}.
-reloader(Applications, RestartApps) ->
+%% @doc Reload specify app config file, restart apps
+-spec(reload([application()], [application()]) -> {'ok', [application()]}).
+reload(Applications, RestartApps) ->
     {ok, [[File]]} = init:get_argument(config),
-    reloader(Applications, RestartApps, File).
+    reload(Applications, RestartApps, File).
 
-%% @doc reload specify app , specify config file, restart apps
--spec reloader(Applications:: [application()], 
-             RestartApps :: [application()], 
-             ConfigFile :: file:name_all()) -> {'ok', [application()]}.
-reloader(Applications, RestartApps, ConfigFile) ->
+%% @doc Reload specify app , specify config file, restart apps
+-spec(reload([application()], [application()], file:name_all()) -> {'ok', [application()]}).
+reload(Applications, RestartApps, ConfigFile) ->
     {ok, Config} = check_config(ConfigFile),
-    reloader_ll(Applications, Config, RestartApps).
+    reload_ll(Applications, Config, RestartApps).
 
-%%--------------------------------------------------------------------
-%% Internal Functions
-%%--------------------------------------------------------------------
-reloader_ll(Applications, Config, RestartApps) ->
+reload_ll(Applications, Config, RestartApps) ->
     case application_specs(Applications) of
         {incorrect_specs, IncorrectApps} ->
-            lager:error("incorrect_specs error ~p", [IncorrectApps]),
+            logger:error("incorrect_specs error ~p", [IncorrectApps]),
             {error, {incorrect_specs, IncorrectApps}};
         Specs ->
             {change_application_data(Specs, Config, RestartApps), Applications}
@@ -139,3 +124,4 @@ parse_app_file(AppSpecPath) ->
         {ok, [{application, _, AppSpec}]} -> AppSpec;
         {error, _Reason} -> incorrect_spec
     end.
+
