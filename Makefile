@@ -1,9 +1,9 @@
 PROJECT = emqx_reloader
 PROJECT_DESCRIPTION = EMQ X Reloader Plugin
-PROJECT_VERSION = 3.0
+PROJECT_VERSION = 3.1
 
 BUILD_DEPS = emqx
-dep_emqx = git-emqx https://github.com/emqx/emqx emqx30
+dep_emqx = git-emqx https://github.com/emqx/emqx testing
 
 ERLC_OPTS += +debug_info
 ERLC_OPTS += +warnings_as_errors +warn_export_all +warn_unused_import
