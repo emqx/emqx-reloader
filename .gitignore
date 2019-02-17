@@ -18,3 +18,5 @@ data/
 .DS_Store
 cover/
 eunit.coverdata
+rebar.lock
+rebar3.crashdump
