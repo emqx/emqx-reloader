@@ -1,6 +1,5 @@
 PROJECT = emqx_reloader
 PROJECT_DESCRIPTION = EMQ X Reloader Plugin
-PROJECT_VERSION = 3.1
 
 CUR_BRANCH := $(shell git branch | grep -e "^*" | cut -d' ' -f 2)
 BRANCH := $(if $(filter $(CUR_BRANCH), master develop testing), $(CUR_BRANCH), testing)
