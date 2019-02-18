@@ -1,8 +1,7 @@
-{application, emqx_reloader, [
-	{description, "EMQ X Reloader Plugin"},
-	{vsn, "git"},
-	{modules, ['emqx_reloader','emqx_reloader_app','emqx_reloader_cli','emqx_reloader_config','emqx_reloader_sup']},
-	{registered, [emqx_reloader_sup]},
-	{applications, [kernel,stdlib]},
-	{mod, {emqx_reloader_app, []}}
-]}.
+{application,emqx_reloader,
+             [{description,"EMQ X Reloader Plugin"},
+              {vsn,"git"},
+              {modules,[]},
+              {registered,[emqx_reloader_sup]},
+              {applications,[kernel,stdlib]},
+              {mod,{emqx_reloader_app,[]}}]}.
