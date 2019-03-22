@@ -15,7 +15,11 @@
 
 -module(emqx_reloader_config).
 
--export([reload/0, reload/1, reload/2, reload/3]).
+-export([ reload/0
+        , reload/1
+        , reload/2
+        , reload/3
+        ]).
 
 -type(application() :: atom()).
 
