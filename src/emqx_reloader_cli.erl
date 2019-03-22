@@ -14,7 +14,10 @@
 
 -module(emqx_reloader_cli).
 
--export([load/0, cmd/1, unload/0]).
+-export([ load/0
+        , cmd/1
+        , unload/0
+        ]).
 
 load() ->
     emqx_ctl:register_command(reload, {?MODULE, cmd}, []).
