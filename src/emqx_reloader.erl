@@ -155,4 +155,3 @@ stamp() -> erlang:localtime().
 
 cancel_timer(undefined) -> ok;
 cancel_timer(TRef)      -> timer:cancel(TRef).
-

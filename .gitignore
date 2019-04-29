@@ -21,3 +21,4 @@ eunit.coverdata
 rebar.lock
 rebar3.crashdump
 erlang.mk
+_build/
