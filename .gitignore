@@ -22,3 +22,4 @@ rebar.lock
 rebar3.crashdump
 erlang.mk
 _build/
+.rebar3/
