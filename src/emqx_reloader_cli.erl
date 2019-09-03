@@ -27,13 +27,13 @@ load() ->
 cmd([Module]) ->
     case emqx_reloader:reload_module(list_to_atom(Module)) of
         {module, _Mod} ->
-            emqx_cli:print("Reload module ~s successfully.~n", [Module]);
+            emqx_mgmt:print("Reload module ~s successfully.~n", [Module]);
         {error, Reason} ->
-            emqx_cli:print("Failed to reload module ~s: ~p.~n", [Module, Reason])
+            emqx_mgmt:print("Failed to reload module ~s: ~p.~n", [Module, Reason])
     end;
 
 cmd(_) ->
-    emqx_cli:usage([{"reload <Module>", "Reload a module"}]).
+    emqx_mgmt:usage([{"reload <Module>", "Reload a module"}]).
 
 unload() ->
     emqx_ctl:unregister_command(reload).
