@@ -106,8 +106,8 @@ handle_cast(_Req, State) ->
     {noreply, State}.
 
 handle_info(do, State) ->
-    Now = stamp(), do_(State#state.last, Now),
-    {noreply, State#state{last = Now}};
+    load_all_modified(),
+    {noreply, State#state{last = stamp()}};
 
 handle_info(_Info, State) ->
     {noreply, State}.
@@ -129,29 +129,18 @@ module_vsn(L) when is_list(L) ->
     {_, Attrs} = lists:keyfind(attributes, 1, L),
     {_, Vsn} = lists:keyfind(vsn, 1, Attrs), Vsn.
 
-do_(From, To) ->
-    [case file:read_file_info(Filename) of
-         {ok, #file_info{mtime = Mtime}} when Mtime >= From, Mtime < To ->
-            case reload_module(Module) of
-                {module, Module} ->
-                    logger:info([{module, ?MODULE}], "Reload module ~s successfully.", [Module]),
-                    ok;
-                {error, Reason} ->
-                    logger:info([{module, ?MODULE}], "Failed to reload module ~s: ~p.", [Module, Reason]),
-                    error
-            end;
-         {ok, _} ->
-             unmodified;
-         {error, enoent} ->
-             %% The Erlang compiler deletes existing .beam files if
-             %% recompiling fails.  Maybe it's worth spitting out a
-             %% warning here, but I'd want to limit it to just once.
-             gone;
-         {error, Reason} ->
-             logger:error([{module, ?MODULE}], "Error reading ~s's file info: ~p~n",
-                         [Filename, Reason]),
-             error
-     end || {Module, Filename} <- code:all_loaded(), is_list(Filename)].
+load_all_modified() ->
+    Ms = [case reload_module(M) of
+             {error, Reason} ->
+                 logger:error("Failed to reload module ~s: ~p", [M, Reason]),
+                 error;
+             {module, _} -> M
+         end || M <- code:modified_modules()],
+    case [M || M <- Ms, M /= error] of
+        [] -> ok;
+        Loaded ->
+            logger:info("Reload module ~p successfully.", [Loaded])
+    end.
 
 stamp() -> erlang:localtime().
 
