@@ -28,7 +28,7 @@ start_link() ->
 init([]) ->
     {ok, {{one_for_one, 5, 60},
           [#{id       => reloader,
-             start    => {emqx_reloader, start_link, []},
+             start    => {emqx_reloader, start_link, [application:get_env(emqx_reloader, interval, 0)]},
              restart  => permanent,
              shutdown => 5000,
              type     => worker,

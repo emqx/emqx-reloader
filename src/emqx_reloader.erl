@@ -26,7 +26,7 @@
 
 -behaviour(gen_server).
 
--export([ start_link/0
+-export([ start_link/1
         , stop/0
         ]).
 
@@ -46,11 +46,9 @@
 
 -record(state, {last, tref}).
 
--define(APP, ?MODULE).
-
 %% @doc Start the reloader.
-start_link() ->
-    gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
+start_link(Interval) ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [Interval], []).
 
 %% @doc Stop the reloader.
 -spec(stop() -> ok).
@@ -86,8 +84,7 @@ is_changed(M) when is_atom(M) ->
 %% gen_server callbacks
 %%------------------------------------------------------------------------------
 
-init([]) ->
-    Interval = application:get_env(?APP, interval, 0),
+init([Interval]) ->
     {ok, init_timer(Interval, #state{last = stamp()})}.
 
 init_timer(Ms, State) when Ms =< 0 ->
